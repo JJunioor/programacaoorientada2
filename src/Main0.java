@@ -1,6 +1,6 @@
 import exe0.Ventilador;
 
-public class Main {
+public class Main0 {
         public static void main(String[] args){
             Ventilador obj1 = new Ventilador();
             obj1.setVelocidade(1);
