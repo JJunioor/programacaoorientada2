@@ -5,13 +5,14 @@ public class CafeteiraEletrica {
     private int poCafe;
     private boolean ligada;
 
-    //Construtor sem parâmetro, default
+    //Construtor sem parâmetro, default ( OBS: Coloquei os valores 0 e false,
+    //porém não é necessário, já vem automático.
     public CafeteiraEletrica(){
         this.agua = 0;
         this.poCafe = 0;
         this.ligada = false;
     }
-
+    //Construtor com parâmetros
     public CafeteiraEletrica(int agua,int poCafe, boolean ligada){
         this.setAgua(agua);
         this.setPocafe (poCafe);
@@ -49,7 +50,7 @@ public class CafeteiraEletrica {
     }
     public void ligar(){
         if (!this.ligada){
-            setLigada(true);
+            this.setLigada(true);
             System.out.println("Cafeteira ligada com sucesso!\n");
             exibe();
         }
@@ -58,29 +59,37 @@ public class CafeteiraEletrica {
 
     public void desligar(){
         if (this.ligada){
-            setLigada(false);
+           this.setLigada(false);
             System.out.println("Cafeteira desligada com sucesso!\n");
             exibe();
         }
         else System.out.println("Não foi possível desligar, pois a Cafeteira já se encontra desligada!\n");
     }
 
-    public void adicionarAgua(int valor){
-        setAgua( this.agua + valor);
-        exibe();
+    public void adicionarAgua(int valor) {
+        if (this.ligada) {
+            if ( valor > 0){
+                setAgua(this.agua + valor);
+                exibe();
+            } else System.out.println("Ml que deseja ser adicionada, deve ser maior que 0");
+        } else System.out.println("Não é possível adicionar Água, cafeteira desligada!");
     }
 
     public void adicionarCafe(int valor){
-        setPocafe( this.poCafe + valor);
-        exibe();
+        if (this.ligada) {
+            if ( valor > 0){
+                setPocafe(this.poCafe + valor);
+                exibe();
+            } else System.out.println("Gr que deseja ser adicionada, deve ser maior que 0");
+        } else System.out.println("Não é possível adicionar Café, cafeteira desligada!");
     }
 
     public void prepararCafe(){
         if (this.ligada){
             if ( this.agua >= 100){
                 if (this.poCafe >= 10){
-                    this.agua -= 100;
-                    this.poCafe -= 10;
+                    this.setAgua(this.agua - 100);
+                    this.setPocafe(this.poCafe - 10);
                     System.out.println("Café preparado com sucesso!\n");
                     exibe();
                 }
@@ -92,7 +101,7 @@ public class CafeteiraEletrica {
     }
 
     public void quantosCafesPossiveis() {
-        int aguas = this.agua;    // cópia da água
+        /*int aguas = this.agua;    // cópia da água
         int cafes = this.poCafe;  // cópia do pó
         int cont = 0;
 
@@ -100,7 +109,13 @@ public class CafeteiraEletrica {
             aguas -= 100;   // simula gastar água
             cafes -= 10;    // simula gastar café
             cont++;            // conta um café possível
-        }
+        }*/
+
+        int dosesAgua = this.agua / 100;
+        int dosesCafe = this.poCafe / 10;
+        int cont;
+
+        cont = Math.min(dosesCafe, dosesAgua);
 
         if (cont > 0) {
             System.out.println("Ainda é possível preparar " + cont + " cafés.");
