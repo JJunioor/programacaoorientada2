@@ -3,11 +3,14 @@ package exe1;
 public class Cofrinho {
     private double saldo;
     private boolean fechado;
+
+    //Construtor sem parâmetro, default
     public Cofrinho(){
         this.saldo = 0;
         this.fechado = false;
     }
 
+    //Construtor com parâmetros
     public Cofrinho(double saldo, boolean fechado ){
         this.setSaldo (saldo);
         this.setFechado (fechado);
@@ -15,12 +18,12 @@ public class Cofrinho {
 
     public void exibe(){
         System.out.println("Saldo em conta do Cofre: " + this.saldo);
-        System.out.println("Cofre se encontra fechado: " + this.fechado);
+        System.out.println("Cofre se encontra fechado: " + (this.fechado ? "Sim" : "Não"));
     }
     public void setSaldo(double saldo) {
         if (saldo >= 0) {
             this.saldo = saldo;
-        } else System.out.println("Saldo Inválido!");
+        } else System.out.println("Saldo informado é inválido!");
     }
 
     //Get nunca usa void
@@ -32,14 +35,14 @@ public class Cofrinho {
         this.fechado = fechado;
     }
     // get nunca usa void
-    public boolean getSituacao(){
+    public boolean getFechado(){
         return this.fechado;
     }
 
     //Abrir
     public void abrir(){
         if (this.fechado){
-            this.fechado = false;
+            setFechado(false);
             System.out.println("Cofre aberto com sucesso!");
             exibe();
         }
@@ -51,7 +54,7 @@ public class Cofrinho {
 
     public void fechar(){
         if (!this.fechado){
-            this.fechado = true;
+            setFechado(true);
             System.out.println("Cofre fechado com sucesso!");
             exibe();
         }
@@ -65,7 +68,7 @@ public class Cofrinho {
         if (!this.fechado){
             if (valor > 0){
                 this.setSaldo( this.saldo + valor);
-                System.out.println("Valor depositado com sucesso na conta!");
+                System.out.println("Valor depositado em conta, com sucesso!");
                 exibe();
             } else System.out.println("Valor não aceito, pois é negativo!");
         } else {
@@ -76,10 +79,15 @@ public class Cofrinho {
 
     public void retirar(){
         if (!this.fechado){
-            double x = this.saldo;
-            this.saldo = 0;
-            System.out.println("Saldo retirado com sucesso! \nValor retirado R$" +  x);
-            exibe();
+            if ( this.saldo > 0) {
+                double aux = this.saldo;
+                this.saldo = 0;
+                System.out.println("Saldo retirado com sucesso! \nValor retirado R$" + aux);
+                exibe();
+            }
+            else{
+                System.out.println("Não é possível retirar o valor total, pois saldo é igual a 0");
+            }
         }
         else {
             System.out.println("Não é possível retirar, cofre se encontra fechado!");
